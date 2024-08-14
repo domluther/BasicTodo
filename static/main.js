@@ -1,7 +1,9 @@
 const listEle = document.querySelector('.todoList');
+const randomBtn = document.querySelector('.pickRandom');
 
 // When the list is clicked, use event bubbling to listen and respond appropriately
 listEle.addEventListener('click', handleListClick);
+randomBtn.addEventListener('click', pickRandomTask);
 
 function handleListClick(e) {
   const taskId = e.target.closest('.todo').dataset['id'];
@@ -33,4 +35,11 @@ async function handleDelete(id, taskName) {
   } else {
     console.log('Cancelled deletion');
   }
+}
+
+async function pickRandomTask() {
+  const dbRes = await fetch('/todo/random');
+  const data = await dbRes.json();
+  const { task } = data.results;
+  document.querySelector('.randomTask').innerText = task;
 }

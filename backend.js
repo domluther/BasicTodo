@@ -42,6 +42,13 @@ app.get('/', async (req, res) => {
 app.post('/todo/', async (req, res) => {
   console.log(req.body);
   const { task } = req.body;
+
+  // I don't want duplicates
+  const results = await coll.find({ task }).toArray();
+  console.log(results);
+  if (results.length > 0) {
+    return res.redirect('/');
+  }
   const dbRes = await coll.insertOne({
     task,
     complete: false,
@@ -56,6 +63,13 @@ app.post('/todo/', async (req, res) => {
 app.get('/todo/', async (req, res) => {
   const results = await coll.find().toArray();
   res.json({ results });
+});
+
+// GET /todo/random -> return a random item
+app.get('/todo/random', async (req, res) => {
+  const results = await coll.find().toArray();
+  const randomIndex = Math.floor(Math.random() * results.length);
+  res.json({ results: results[randomIndex] });
 });
 
 // PUT /todo/id -> toggle complete of the todo identified by id

@@ -10,8 +10,8 @@
     <h1>Todo ticker - EJS STYLE</h1>
     <ul class="todoList">
       <% for (let i = 0; i < todos.length; i++){ %>
-        <li class="todo <%=todos[i].complete %>" data-id= <%=todos[i]._id %>>
-            <span class="todoTask"><%=todos[i].task %> </span>
+        <li class="todo" data-id= <%=todos[i]._id %>>
+            <span class="todoTask <%=todos[i].complete %>"><%=todos[i].task %> </span>
             <span class="priority" title="toggle priority"><% if (todos[i].priority) {%> ⭐️
                 <% } else {%> ✩
                     <% } %> </span>
@@ -33,7 +33,10 @@
     </form>
 
     <h2><%= count %> items remaining</h2>
-
+    <button class="pickRandom">Random task</button>
+    <h3>You should...
+    <span class="randomTask"></span>
+    </h3>
     <script src="main.js" defer></script>
   </body>
 </html>
