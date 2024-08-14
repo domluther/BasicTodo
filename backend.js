@@ -42,6 +42,7 @@ app.post('/todo/', async (req, res) => {
   const dbRes = await coll.insertOne({
     task,
     complete: false,
+    // 50/50 chance of being priority or not
     priority: Math.random() > 0.5,
   });
   console.log(dbRes);
@@ -51,22 +52,20 @@ app.post('/todo/', async (req, res) => {
 // GET /todo/ -> return all todo items
 app.get('/todo/', async (req, res) => {
   const results = await coll.find().toArray();
-  console.log(results);
-  res.json({ msg: 'get todos' });
+  res.json({ results });
 });
 
 // PUT /todo/id -> toggle complete of the todo identified by id
 app.put('/todo/:id', async (req, res) => {
   const todoId = req.params.id;
-  const dbRes = await coll.updateOne(
-    { _id: new ObjectId(todoId) }[
-      {
-        $set: { complete: { $eq: [false, '$complete'] } },
-      }
-    ]
-  );
-  console.log(dbRes);
-  res.json({ msg: `toggled complete of todo ${todoId}` });
+  console.log(todoId);
+
+  // Toggle field
+  //   Uses [] as it is an aggregation pipeline - needed to use $not
+  await coll.updateOne({ _id: new ObjectId(todoId) }, [
+    { $set: { complete: { $not: '$complete' } } },
+  ]);
+  res.json({ msg: `toggled completion of todo ${todoId}` });
 });
 
 // DELETE /todo/id -> remove the todo identified by the id
