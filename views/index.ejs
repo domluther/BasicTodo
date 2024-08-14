@@ -13,13 +13,12 @@
         <li class="todo <%=todos[i].complete %>" data-id= <%=todos[i]._id %>>
             <span class="todoTask"><%=todos[i].task %> </span>
             <span class="priority" title="toggle priority"><% if (todos[i].priority) {%> ⭐️
-                <% } %>
-                <% if (!todos[i].priority) {%> ✩
+                <% } else {%> ✩
                     <% } %> </span>
             <span class="toggle" title="toggle completion">
             <% if (todos[i].complete) {%> ↩️
-            <% } %> 
-            <% if (!todos[i].complete) {%> ✅
+            <% }  else {%> 
+           ✅
             <% } %> 
                     
             </span>
