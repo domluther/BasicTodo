@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Todo app</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Todo ticker - EJS STYLE</h1>
+    <ul class="todoList">
+      <% for (let i = 0; i < todos.length; i++){ %>
+        <li class="todo <%=todos[i].complete %>" data-id= <%=todos[i]._id %>>
+            <span class="todoTask"><%=todos[i].task %> </span>
+            <span class="priority" title="toggle priority"><% if (todos[i].priority) {%> ⭐️
+                <% } %>
+                <% if (!todos[i].priority) {%> ✩
+                    <% } %> </span>
+            <span class="toggle" title="toggle completion">
+            <% if (todos[i].complete) {%> ↩️
+            <% } %> 
+            <% if (!todos[i].complete) {%> ✅
+            <% } %> 
+                    
+            </span>
+            <span class="delete" title="delete item">🗑️</span>
+          </li>    
+      <% } %>
+    </ul>
+
+    <form action="/todo/" method="POST" >
+        <input name="task" type="text" placeholder="Add a todo">
+        <input type="submit">
+    </form>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>

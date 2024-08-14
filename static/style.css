@@ -1,0 +1,133 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Todo List Styling */
+.todoList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+.todo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+/* Completed Task Styling */
+.todo.true {
+  background-color: #d4edda;
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+/* Incomplete Task Styling */
+.todo.false {
+  background-color: #fff3cd;
+}
+
+/* Task Text Styling */
+.todoTask {
+  flex-grow: 1;
+  font-size: 1.2rem;
+}
+
+/* Priority Star Styling */
+.priority {
+  margin-left: 10px;
+  font-size: 1.5rem;
+  color: #ffc107;
+}
+
+/* Toggle Button Styling */
+.toggle {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
+/* Delete Button Styling */
+.delete {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 1.5rem;
+  color: #dc3545;
+}
+
+/* Hover Effects */
+.todo:hover {
+  background-color: #f8f9fa;
+}
+
+.delete:hover {
+  color: #c82333;
+}
+
+.toggle:hover {
+  color: #28a745;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Text Input Styling */
+form input[type='text'] {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: border-color 0.3s ease;
+}
+
+form input[type='text']:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Submit Button Styling */
+form input[type='submit'] {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form input[type='submit']:hover {
+  background-color: #0056b3;
+}

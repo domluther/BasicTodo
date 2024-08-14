@@ -21,6 +21,7 @@ async function connectToDB() {
 
 let coll = connectToDB();
 
+app.set('view engine', 'ejs');
 // Middleware
 app.use(express.static('static'));
 // Logging
@@ -31,8 +32,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // GET / -> return index.html (move to ejs later)
-app.get('/', (req, res) => {
-  res.sendFile('index.html');
+app.get('/', async (req, res) => {
+  const results = await coll.find().toArray();
+  res.render('index.ejs', { todos: results });
 });
 
 // POST /todo/ -> create a new todo
@@ -46,7 +48,7 @@ app.post('/todo/', async (req, res) => {
     priority: Math.random() > 0.5,
   });
   console.log(dbRes);
-  res.json({ msg: 'new todo' });
+  res.redirect('/');
 });
 
 // GET /todo/ -> return all todo items
@@ -56,24 +58,49 @@ app.get('/todo/', async (req, res) => {
 });
 
 // PUT /todo/id -> toggle complete of the todo identified by id
-app.put('/todo/:id', async (req, res) => {
+app.put('/todo/complete/:id', async (req, res) => {
   const todoId = req.params.id;
   console.log(todoId);
 
   // Toggle field
   //   Uses [] as it is an aggregation pipeline - needed to use $not
-  await coll.updateOne({ _id: new ObjectId(todoId) }, [
-    { $set: { complete: { $not: '$complete' } } },
-  ]);
-  res.json({ msg: `toggled completion of todo ${todoId}` });
+  try {
+    await coll.updateOne({ _id: new ObjectId(todoId) }, [
+      { $set: { complete: { $not: '$complete' } } },
+    ]);
+    res.json({ msg: `toggled completion of todo ${todoId}` });
+  } catch (error) {
+    res.json({ error: 'invalid id' });
+  }
+});
+
+// PUT /todo/id -> toggle complete of the todo identified by id
+app.put('/todo/priority/:id', async (req, res) => {
+  const todoId = req.params.id;
+  console.log(todoId);
+
+  // Toggle field
+  //   Uses [] as it is an aggregation pipeline - needed to use $not
+  try {
+    await coll.updateOne({ _id: new ObjectId(todoId) }, [
+      { $set: { priority: { $not: '$priority' } } },
+    ]);
+    res.json({ msg: `toggled priority of todo ${todoId}` });
+  } catch (error) {
+    res.json({ error: 'invalid id' });
+  }
 });
 
 // DELETE /todo/id -> remove the todo identified by the id
 app.delete('/todo/:id', async (req, res) => {
   const todoId = req.params.id;
-  const dbRes = await coll.deleteOne({ _id: new ObjectId(todoId) });
-  console.log(dbRes);
-  res.json({ msg: `delete todo ${todoId}` });
+  try {
+    const dbRes = await coll.deleteOne({ _id: new ObjectId(todoId) });
+    console.log(dbRes);
+    res.json({ msg: `delete todo ${todoId}` });
+  } catch (error) {
+    res.json({ error: 'invalid id' });
+  }
 });
 
 // 404 for anything else
