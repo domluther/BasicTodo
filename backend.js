@@ -34,7 +34,9 @@ app.use(express.urlencoded({ extended: true }));
 // GET / -> return index.html (move to ejs later)
 app.get('/', async (req, res) => {
   const results = await coll.find().toArray();
-  res.render('index.ejs', { todos: results });
+  const remainingCount = await coll.find({ complete: false }).toArray();
+  console.log(remainingCount);
+  res.render('index.ejs', { todos: results, count: remainingCount.length });
 });
 
 // POST /todo/ -> create a new todo
