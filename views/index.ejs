@@ -12,17 +12,16 @@
       <% for (let i = 0; i < todos.length; i++){ %>
         <li class="todo" data-id= <%=todos[i]._id %>>
             <span class="todoTask <%=todos[i].complete %>"><%=todos[i].task %> </span>
-            <span class="priority" title="toggle priority"><% if (todos[i].priority) {%> ⭐️
-                <% } else {%> ✩
-                    <% } %> </span>
-            <span class="toggle" title="toggle completion">
-            <% if (todos[i].complete) {%> ↩️
-            <% }  else {%> 
-           ✅
-            <% } %> 
+                    <input type="checkbox" class="toggle" id=<%=todos[i]._id %> name=<%=todos[i].task %>
+                    <% if (todos[i].complete) {%> checked
+                      <% } %> 
+                    >
                     
             </span>
-            <span class="delete" title="delete item">🗑️</span>
+            <span class="priority" title="toggle priority"><% if (todos[i].priority) {%> ⭐️
+              <% } else {%> ✩
+                  <% } %> </span>
+          <span class="delete" title="delete item">🗑️</span>
           </li>    
       <% } %>
     </ul>
