@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { getIndex } = require('../controllers/home');
 
 // GET / -> return index.html
-router.get('/', async (req, res) => {
-  const results = await coll.find().toArray();
-  const remainingCount = await coll.countDocuments({ complete: false });
-  res.render('index.ejs', { todos: results, count: remainingCount });
-});
+router.get('/', getIndex);
 
 // Export the router
 module.exports = router;
