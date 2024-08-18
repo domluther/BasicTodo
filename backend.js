@@ -1,39 +1,25 @@
+// External libraries
 const express = require('express');
 const morgan = require('morgan');
-const { MongoClient } = require('mongodb');
 
-//  I need my routes
+// my code
+const { connectToDB } = require('./config/db');
+
+//  My routes
 const homeRoutes = require('./routes/home');
 const todoRoutes = require('./routes/todos');
 
+// Constants
 const app = express();
 const PORT = process.env.PORT || 5555;
-
-async function connectToDB() {
-  const URI = process.env.MONGO_URI;
-  console.log('Connecting to DB');
-  const client = new MongoClient(URI);
-  try {
-    await client.connect();
-    // This coll variable is used throughout - terrible practice - needs updating and moving to model
-    coll = client.db('basicTodos').collection('todos');
-    console.log('Connected to DB');
-  } catch (error) {
-    console.error(`Failed to connect to DB - ${error}`);
-    process.exit(1);
-  }
-}
 
 connectToDB();
 
 app.set('view engine', 'ejs');
-// Middleware
+// Middleware - Static, logging, json + forms
 app.use(express.static('static'));
-// Logging
 app.use(morgan('tiny'));
-// JSON
 app.use(express.json());
-// Forms
 app.use(express.urlencoded({ extended: true }));
 
 // The routes
@@ -45,6 +31,7 @@ const unknownEndpoint = (req, res) => {
   res.status(404).render('404.ejs');
 };
 
+// After the valid routes
 app.use(unknownEndpoint);
 
 app.listen(PORT, () => {
