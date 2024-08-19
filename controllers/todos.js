@@ -1,8 +1,9 @@
 const { ObjectId } = require('mongodb');
+const { Todo } = require('../model/Todo');
 
 // Return all the todos as JSON
 async function returnTodos(req, res) {
-  const results = await coll.find().toArray();
+  const results = await Todo.find().toArray();
   res.json({ results });
 }
 
@@ -11,14 +12,14 @@ async function createTodo(req, res) {
   const { task } = req.body;
 
   // Ensure there are no duplicates
-  const results = await coll.find({ task }).toArray();
+  const results = await Todo.find({ task });
   console.log(results);
   if (results.length > 0) {
     console.log('duplicate');
     return res.redirect('/');
   }
   //   Send the request to the model
-  const dbRes = await coll.insertOne({
+  const dbRes = await Todo.create({
     task,
     complete: false,
     // 50/50 chance of being priority or not
@@ -31,7 +32,7 @@ async function createTodo(req, res) {
 
 async function returnRandomTodo(req, res) {
   // Fixed - added complete : fase as otherwise could suggest a random task that had been finished.
-  const results = await coll.find({ complete: false }).toArray();
+  const results = await Todo.find({ complete: false }).toArray();
   const randomIndex = Math.floor(Math.random() * results.length);
   res.json({ results: results[randomIndex] });
 }
@@ -43,7 +44,7 @@ async function toggleComplete(req, res) {
   // Toggle field
   //   Uses [] as it is an aggregation pipeline - needed to use $not
   try {
-    await coll.updateOne({ _id: ObjectId.createFromHexString(todoId) }, [
+    await Todo.updateOne({ _id: ObjectId.createFromHexString(todoId) }, [
       { $set: { complete: { $not: '$complete' } } },
     ]);
     console.log('Completed');
@@ -61,7 +62,7 @@ async function togglePriority(req, res) {
   // Toggle field
   //   Uses [] as it is an aggregation pipeline - needed to use $not
   try {
-    await coll.updateOne({ _id: ObjectId.createFromHexString(todoId) }, [
+    await Todo.updateOne({ _id: ObjectId.createFromHexString(todoId) }, [
       { $set: { priority: { $not: '$priority' } } },
     ]);
     res.json({ msg: `toggled priority of todo ${todoId}` });
@@ -73,7 +74,7 @@ async function togglePriority(req, res) {
 async function deleteTodo(req, res) {
   const todoId = req.params.id;
   try {
-    const dbRes = await coll.deleteOne({ _id: new ObjectId(todoId) });
+    const dbRes = await Todo.deleteOne({ _id: new ObjectId(todoId) });
     console.log(dbRes);
     res.json({ msg: `delete todo ${todoId}` });
   } catch (error) {

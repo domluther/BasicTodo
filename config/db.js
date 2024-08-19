@@ -1,18 +1,13 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
 async function connectToDB() {
   const URI = process.env.MONGO_URI;
-  const dbName = 'basicTodos';
-  const collName = 'todos';
-  console.log(`Connecting to ${dbName} `);
-  const client = new MongoClient(URI);
+  console.log(`Connecting to database `);
   try {
-    await client.connect();
-    // This coll variable is used throughout - terrible practice - needs updating and moving to model
-    coll = client.db(dbName).collection(collName);
-    console.log(`Connected to ${dbName}`);
+    const conn = await mongoose.connect(URI);
+    console.log(`Connected to ${conn.connection.name}`);
   } catch (error) {
-    console.error(`Failed to connect to DB ${dbName} - ${error}`);
+    console.error(`Failed to connect to DB - ${error}`);
     process.exit(1);
   }
 }
