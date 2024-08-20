@@ -10,7 +10,7 @@
     <h1>Todo ticker - EJS STYLE</h1>
     <ul class="todoList">
       <% for (let i = 0; i < todos.length; i++){ %>
-        <li class="todo <%=todos[i].complete %>" data-id= <%=todos[i]._id %>>
+        <li class="todo <%=todos[i].complete %> <% if (todos[i].priority) {%> priority <%}%>" data-id= <%=todos[i]._id %>>
             <span class="todoTask <%=todos[i].complete %>"><%=todos[i].task %> </span>
                     <input type="checkbox" class="toggle" id=<%=todos[i]._id %> name="<%=todos[i].task %>"
                     <% if (todos[i].complete) {%> checked

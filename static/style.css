@@ -37,7 +37,7 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-/* Completed Task Styling */
+/* Styling for completed task name */
 .todoTask.true {
   /* background-color: #d4edda; */
   text-decoration: line-through;
@@ -59,6 +59,11 @@ h1 {
   background-color: lightgreen;
 }
 
+/* Incomplete priority tasks are highlighted differently */
+.todo.priority.false {
+  background-color: gold;
+}
+
 /* Task Text Styling */
 .todoTask {
   flex-grow: 1;
@@ -66,7 +71,7 @@ h1 {
 }
 
 /* Priority Star Styling */
-.priority {
+span.priority {
   margin-left: 10px;
   font-size: 1.5rem;
   color: #ffc107;
