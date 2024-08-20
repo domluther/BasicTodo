@@ -32,7 +32,7 @@ async function createTodo(req, res) {
 
 async function returnRandomTodo(req, res) {
   // Fixed - added complete : fase as otherwise could suggest a random task that had been finished.
-  const results = await Todo.find({ complete: false }).toArray();
+  const results = await Todo.find({ complete: false });
   const randomIndex = Math.floor(Math.random() * results.length);
   res.json({ results: results[randomIndex] });
 }

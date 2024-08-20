@@ -12,7 +12,7 @@
       <% for (let i = 0; i < todos.length; i++){ %>
         <li class="todo" data-id= <%=todos[i]._id %>>
             <span class="todoTask <%=todos[i].complete %>"><%=todos[i].task %> </span>
-                    <input type="checkbox" class="toggle" id=<%=todos[i]._id %> name=<%=todos[i].task %>
+                    <input type="checkbox" class="toggle" id=<%=todos[i]._id %> name="<%=todos[i].task %>"
                     <% if (todos[i].complete) {%> checked
                       <% } %> 
                     >
