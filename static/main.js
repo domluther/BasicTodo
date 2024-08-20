@@ -40,6 +40,14 @@ async function handleDelete(id, taskName) {
 async function pickRandomTask() {
   const dbRes = await fetch('/todo/random');
   const data = await dbRes.json();
-  const { task } = data.results;
+  const { task, _id } = data.results;
   document.querySelector('.randomTask').innerText = task;
+
+  // Clean up any previous randomly selected highlighting
+  document
+    .querySelectorAll('li.todo')
+    .forEach((ele) => ele.classList.remove('picked'));
+
+  // Add styling to the randomly picked item
+  document.querySelector(`[data-id="${_id}"]`).classList.add('picked');
 }

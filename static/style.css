@@ -49,6 +49,16 @@ h1 {
   background-color: #fff3cd;
 }
 
+/* Complete Task Styling */
+.todo.true {
+  background-color: lightgrey;
+}
+
+/* Suggested Task Styling */
+.todo.picked {
+  background-color: lightgreen;
+}
+
 /* Task Text Styling */
 .todoTask {
   flex-grow: 1;
