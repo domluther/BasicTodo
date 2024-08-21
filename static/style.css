@@ -52,6 +52,7 @@ h1 {
 /* Complete Task Styling */
 .todo.true {
   background-color: lightgrey;
+  padding: 8px 15px;
 }
 
 /* Suggested Task Styling */

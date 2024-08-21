@@ -3,7 +3,7 @@ import Todo from '../model/Todo.js';
 
 // Return all the todos as JSON
 export async function returnTodos(req, res) {
-  const results = await Todo.find().toArray();
+  const results = await Todo.find();
   res.json({ results });
 }
 
