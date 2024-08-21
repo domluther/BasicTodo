@@ -1,13 +1,13 @@
 // External libraries
-const express = require('express');
-const morgan = require('morgan');
+import express from 'express';
+import morgan from 'morgan';
 
 // my code
-const { connectToDB } = require('./config/db');
+import connectToDB from './config/db.js';
 
 //  My routes
-const homeRoutes = require('./routes/home');
-const todoRoutes = require('./routes/todos');
+import rootRoutes from './routes/index.js';
+import todoRoutes from './routes/todo.js';
 
 // Constants
 const app = express();
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // The routes
-app.use('/', homeRoutes);
+app.use('/', rootRoutes);
 app.use('/todo', todoRoutes);
 
 // 404 for anything else

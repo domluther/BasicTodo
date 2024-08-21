@@ -1,13 +1,13 @@
-const { ObjectId } = require('mongodb');
-const { Todo } = require('../model/Todo');
+import { Types } from 'mongoose';
+import Todo from '../model/Todo.js';
 
 // Return all the todos as JSON
-async function returnTodos(req, res) {
+export async function returnTodos(req, res) {
   const results = await Todo.find().toArray();
   res.json({ results });
 }
 
-async function createTodo(req, res) {
+export async function createTodo(req, res) {
   // What's the task
   const { task } = req.body;
 
@@ -30,21 +30,21 @@ async function createTodo(req, res) {
   res.redirect('/');
 }
 
-async function returnRandomTodo(req, res) {
+export async function returnRandomTodo(req, res) {
   // Fixed - added complete : fase as otherwise could suggest a random task that had been finished.
   const results = await Todo.find({ complete: false });
   const randomIndex = Math.floor(Math.random() * results.length);
   res.json({ results: results[randomIndex] });
 }
 
-async function toggleComplete(req, res) {
+export async function toggleComplete(req, res) {
   const todoId = req.params.id;
   console.log(todoId);
 
   // Toggle field
   //   Uses [] as it is an aggregation pipeline - needed to use $not
   try {
-    await Todo.updateOne({ _id: ObjectId.createFromHexString(todoId) }, [
+    await Todo.updateOne({ _id: Types.ObjectId.createFromHexString(todoId) }, [
       { $set: { complete: { $not: '$complete' } } },
     ]);
     console.log('Completed');
@@ -55,14 +55,14 @@ async function toggleComplete(req, res) {
   }
 }
 
-async function togglePriority(req, res) {
+export async function togglePriority(req, res) {
   const todoId = req.params.id;
   console.log(todoId);
 
   // Toggle field
   //   Uses [] as it is an aggregation pipeline - needed to use $not
   try {
-    await Todo.updateOne({ _id: ObjectId.createFromHexString(todoId) }, [
+    await Todo.updateOne({ _id: Types.ObjectId.createFromHexString(todoId) }, [
       { $set: { priority: { $not: '$priority' } } },
     ]);
     res.json({ msg: `toggled priority of todo ${todoId}` });
@@ -71,22 +71,20 @@ async function togglePriority(req, res) {
   }
 }
 
-async function deleteTodo(req, res) {
+export async function deleteTodo(req, res) {
   const todoId = req.params.id;
+  console.log(`Trying to delete ${todoId}`);
   try {
-    const dbRes = await Todo.deleteOne({ _id: new ObjectId(todoId) });
+    const dbRes = await Todo.deleteOne({
+      _id: Types.ObjectId.createFromHexString(todoId),
+    });
     console.log(dbRes);
-    res.json({ msg: `delete todo ${todoId}` });
+    if (dbRes.deletedCount === 1) {
+      return res.json({ msg: `delete todo ${todoId}` });
+    } else {
+      throw new Error(`No document deleted for ID ${todoId}`);
+    }
   } catch (error) {
-    res.json({ error: 'invalid id' });
+    res.json({ error: error });
   }
 }
-
-module.exports = {
-  createTodo,
-  deleteTodo,
-  returnRandomTodo,
-  returnTodos,
-  toggleComplete,
-  togglePriority,
-};

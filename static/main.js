@@ -1,3 +1,5 @@
+'use strict';
+
 const listEle = document.querySelector('.todoList');
 const randomBtn = document.querySelector('.pickRandom');
 

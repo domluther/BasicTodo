@@ -94,8 +94,9 @@ span.priority {
 }
 
 /* Hover Effects */
-.todo:hover {
+.todo.false:hover {
   background-color: #f8f9fa;
+  transform: scale(1.05);
 }
 
 .delete:hover {

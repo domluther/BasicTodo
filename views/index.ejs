@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Todo ticker - EJS STYLE</h1>
+    <h1>Todo Ticker</h1>
     <ul class="todoList">
       <% for (let i = 0; i < todos.length; i++){ %>
         <li class="todo <%=todos[i].complete %> <% if (todos[i].priority) {%> priority <%}%>" data-id= <%=todos[i]._id %>>
