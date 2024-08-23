@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 import Todo from '../model/Todo.js';
 
-// Return all the todos as JSON
+// Return all the todos as JSON - not sure why this exists but OK
 export async function returnTodos(req, res) {
   const results = await Todo.find();
   res.json({ results });
@@ -11,7 +11,7 @@ export async function createTodo(req, res) {
   // What's the task
   const { task, priority } = req.body;
 
-  //   Create a new doc
+  //   Create a new todo using the Model
   const doc = new Todo({
     task,
     complete: false,
@@ -24,27 +24,29 @@ export async function createTodo(req, res) {
     res.redirect('/');
   } catch (error) {
     // Generally to catch attempts to duplicate
-    console.error(error.errmsg);
+    console.error(error.message);
     res.status(400).redirect('/');
   }
-  // const dbRes = await Todo.create({
-  //   task,
-  //   complete: false,
-  //   priority: priority ? true : false,
-  // });
 }
 
 export async function updateTodo(req, res) {
   // What's the task
   const todoId = Types.ObjectId.createFromHexString(req.params.id);
   const { task } = req.body;
-  const dbRes = await Todo.findOneAndUpdate(
-    { _id: todoId },
-    { $set: { task: task } },
-    { runValidators: true }
-  );
-  console.log(`Updated text to ${task}`);
-  res.redirect(200, '/');
+  try {
+    const dbRes = await Todo.findOneAndUpdate(
+      { _id: todoId },
+      { $set: { task: task } },
+      // Without this, doesn't run validator (check min length)
+      { runValidators: true }
+    );
+    console.log(dbRes);
+    console.log(`Updated text to ${task}`);
+    res.redirect(200, '/');
+  } catch (error) {
+    console.error(error);
+    res.redirect(400, '/');
+  }
 }
 
 export async function returnRandomTodo(req, res) {

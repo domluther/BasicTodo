@@ -48,15 +48,22 @@ function handleEditTask(target, taskId) {
 }
 
 async function handleSubmitChange(target, taskId) {
+  const minLength = 3;
   const task = target.parentElement.querySelector('input').value;
-  // Send a put request to the server with taskId and the new task name
-  await fetch(`/todo/${taskId}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ task }),
-  });
-  // Reload the page
-  location.reload();
+  if (task.length < minLength) {
+    // TODO Add some kind of validation message appear
+    console.log('Too short!');
+    // location.reload();
+  } else {
+    // Send a put request to the server with taskId and the new task name
+    await fetch(`/todo/${taskId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task }),
+    });
+    // Reload the page
+    location.reload();
+  }
 }
 
 async function handleUndoChange() {
