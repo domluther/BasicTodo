@@ -18,21 +18,46 @@ function handleListClick(e) {
   if (e.target.classList.contains('toggle')) handleToggle(taskId);
   if (e.target.classList.contains('delete')) handleDelete(taskId, taskName);
   if (e.target.classList.contains('priority')) handlePriority(taskId);
+  if (e.target.classList.contains('todoTask')) handleEditTask(e.target, taskId);
+  if (e.target.classList.contains('undoChange')) handleUndoChange();
 }
 
-async function handleToggle(id) {
-  await fetch(`/todo/complete/${id}`, { method: 'PUT' });
+async function handleToggle(taskId) {
+  await fetch(`/todo/complete/${taskId}`, { method: 'PUT' });
   location.reload();
 }
 
-async function handlePriority(id) {
-  await fetch(`/todo/priority/${id}`, { method: 'PUT' });
+async function handlePriority(taskId) {
+  await fetch(`/todo/priority/${taskId}`, { method: 'PUT' });
   location.reload();
 }
 
-async function handleDelete(id, taskName) {
+async function handleEditTask(target, taskId) {
+  console.log(`You want to edit the task ${taskId}`);
+  console.log(target);
+  const currentTask = target.innerText.trim();
+  console.log(currentTask);
+  // Read in the current value of the text
+  // Make a new set of elemenets
+  // <input class="todoTask" type="text" value=currentTask /> <button class="submitChange">✅</button><button class="undoChange">❌</button>
+
+  // Add event listeners to submitChange + undoChange
+}
+
+async function handleSubmitChange(taskId) {
+  // Send a put request to the server with taskId and the new task name
+  // Reload the page
+  location.reload();
+}
+
+async function handleUndoChange() {
+  // Easiest option - reload page (will lose random colouring but easier than rebuilding the element)
+  location.reload();
+}
+
+async function handleDelete(taskId, taskName) {
   if (confirm(`Are you sure you want to remove ${taskName}`)) {
-    await fetch(`/todo/${id}`, { method: 'DELETE' });
+    await fetch(`/todo/${taskId}`, { method: 'DELETE' });
     location.reload();
   } else {
     console.log('Cancelled deletion');
