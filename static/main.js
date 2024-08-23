@@ -10,9 +10,9 @@ randomBtn.addEventListener('click', pickRandomTask);
 function handleListClick(e) {
   const taskId = e.target.closest('.todo').dataset['id'];
   const taskName = e.target
-    .closest('.todo')
-    .querySelector('.todoTask').innerText;
-  console.log(`Interacting with task ${taskId} - ${taskName}`);
+    ?.closest('.todo')
+    ?.querySelector('.todoTask')?.innerText;
+  // console.log(`Interacting with task ${taskId} - ${taskName}`);
 
   // Guard clause - don't listen to anything else
   if (e.target.classList.contains('toggle')) handleToggle(taskId);
@@ -20,6 +20,8 @@ function handleListClick(e) {
   if (e.target.classList.contains('priority')) handlePriority(taskId);
   if (e.target.classList.contains('todoTask')) handleEditTask(e.target, taskId);
   if (e.target.classList.contains('undoChange')) handleUndoChange();
+  if (e.target.classList.contains('submitChange'))
+    handleSubmitChange(e.target, taskId);
 }
 
 async function handleToggle(taskId) {
@@ -32,20 +34,27 @@ async function handlePriority(taskId) {
   location.reload();
 }
 
-async function handleEditTask(target, taskId) {
-  console.log(`You want to edit the task ${taskId}`);
-  console.log(target);
-  const currentTask = target.innerText.trim();
-  console.log(currentTask);
+function handleEditTask(target, taskId) {
   // Read in the current value of the text
-  // Make a new set of elemenets
-  // <input class="todoTask" type="text" value=currentTask /> <button class="submitChange">✅</button><button class="undoChange">❌</button>
-
-  // Add event listeners to submitChange + undoChange
+  const currentTask = target.innerText.trim();
+  // Remove the span tag
+  const targetParent = target.parentElement;
+  targetParent.firstElementChild.remove();
+  // Add the input box where the span was
+  targetParent.insertAdjacentHTML(
+    'afterbegin',
+    `<input class="editTodo" type="text" value="${currentTask}" /> <span class="fakeButton submitChange">✅</span><span class="fakeButton undoChange">❌</span>`
+  );
 }
 
-async function handleSubmitChange(taskId) {
+async function handleSubmitChange(target, taskId) {
+  const task = target.parentElement.querySelector('input').value;
   // Send a put request to the server with taskId and the new task name
+  await fetch(`/todo/${taskId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task }),
+  });
   // Reload the page
   location.reload();
 }

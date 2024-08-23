@@ -28,6 +28,20 @@ export async function createTodo(req, res) {
   res.redirect('/');
 }
 
+export async function updateTodo(req, res) {
+  // What's the task
+  const todoId = req.params.id;
+  const { task } = req.body;
+  // Ensure there are no duplicates
+
+  const dbRes = await Todo.updateOne(
+    { _id: Types.ObjectId.createFromHexString(todoId) },
+    { $set: { task: task } }
+  );
+  console.log(`Updated text to ${task}`);
+  res.redirect('/');
+}
+
 export async function returnRandomTodo(req, res) {
   // Get all the tasks
   const results = await Todo.find({ complete: false });
