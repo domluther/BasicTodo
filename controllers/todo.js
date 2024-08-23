@@ -30,10 +30,19 @@ export async function createTodo(req, res) {
 }
 
 export async function returnRandomTodo(req, res) {
-  // Fixed - added complete : fase as otherwise could suggest a random task that had been finished.
+  // Get all the tasks
   const results = await Todo.find({ complete: false });
-  const randomIndex = Math.floor(Math.random() * results.length);
-  res.json({ results: results[randomIndex] });
+  // Random picker takes into account priority.
+  let randomIndex = Math.floor(Math.random() * results.length);
+  let result = results[randomIndex];
+  if (result.priority) {
+    return res.json({ result });
+  }
+  //  If the first pick isn't priority, again.
+  console.log('Re-rolling');
+  randomIndex = Math.floor(Math.random() * results.length);
+  result = results[randomIndex];
+  return res.json({ result });
 }
 
 export async function toggleComplete(req, res) {
