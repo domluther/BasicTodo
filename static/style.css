@@ -55,14 +55,14 @@ h1 {
   padding: 8px 15px;
 }
 
-/* Suggested Task Styling */
-.todo.picked {
-  background-color: lightgreen;
-}
-
 /* Incomplete priority tasks are highlighted differently */
 .todo.priority.false {
   background-color: gold;
+}
+
+/* Suggested Task Styling - later down so it cascades over the regular priority highlighting */
+.todo.picked.false {
+  background-color: lightgreen;
 }
 
 /* Task Text Styling */
