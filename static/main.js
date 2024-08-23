@@ -42,8 +42,7 @@ async function handleDelete(id, taskName) {
 async function pickRandomTask() {
   const dbRes = await fetch('/todo/random');
   const data = await dbRes.json();
-  const { task, _id } = data.result;
-  document.querySelector('.randomTask').innerText = task;
+  const { _id } = data.result;
 
   // Clean up any previous randomly selected highlighting
   document
