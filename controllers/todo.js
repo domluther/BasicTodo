@@ -22,8 +22,7 @@ export async function createTodo(req, res) {
   const dbRes = await Todo.create({
     task,
     complete: false,
-    // 50/50 chance of being priority or not
-    priority: Math.random() > 0.5,
+    priority: false,
   });
   console.log('Adding it');
   console.log(dbRes);
