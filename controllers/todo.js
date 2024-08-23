@@ -10,36 +10,41 @@ export async function returnTodos(req, res) {
 export async function createTodo(req, res) {
   // What's the task
   const { task, priority } = req.body;
-  // Ensure there are no duplicates
-  const results = await Todo.find({ task });
-  console.log(results);
-  if (results.length > 0) {
-    console.log('duplicate');
-    return res.redirect('/');
-  }
-  //   Send the request to the model
-  const dbRes = await Todo.create({
+
+  //   Create a new doc
+  const doc = new Todo({
     task,
     complete: false,
     priority: priority ? true : false,
   });
-  console.log('Adding it');
-  console.log(dbRes);
-  res.redirect('/');
+
+  try {
+    const dbRes = await doc.save();
+    console.log(`Task added: ${task}`);
+    res.redirect('/');
+  } catch (error) {
+    // Generally to catch attempts to duplicate
+    console.error(error.errmsg);
+    res.status(400).redirect('/');
+  }
+  // const dbRes = await Todo.create({
+  //   task,
+  //   complete: false,
+  //   priority: priority ? true : false,
+  // });
 }
 
 export async function updateTodo(req, res) {
   // What's the task
-  const todoId = req.params.id;
+  const todoId = Types.ObjectId.createFromHexString(req.params.id);
   const { task } = req.body;
-  // Ensure there are no duplicates
-
-  const dbRes = await Todo.updateOne(
-    { _id: Types.ObjectId.createFromHexString(todoId) },
-    { $set: { task: task } }
+  const dbRes = await Todo.findOneAndUpdate(
+    { _id: todoId },
+    { $set: { task: task } },
+    { runValidators: true }
   );
   console.log(`Updated text to ${task}`);
-  res.redirect('/');
+  res.redirect(200, '/');
 }
 
 export async function returnRandomTodo(req, res) {

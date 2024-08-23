@@ -6,6 +6,7 @@ const todoSchema = new mongoose.Schema({
   task: {
     type: String,
     required: true,
+    unique: true,
   },
 
   complete: {
@@ -14,6 +15,7 @@ const todoSchema = new mongoose.Schema({
   },
   priority: {
     type: Boolean,
+    required: true,
   },
 });
 

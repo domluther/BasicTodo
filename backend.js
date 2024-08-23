@@ -18,7 +18,7 @@ connectToDB();
 app.set('view engine', 'ejs');
 // Middleware - Static, logging, json + forms
 app.use(express.static('static'));
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
