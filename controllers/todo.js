@@ -9,8 +9,7 @@ export async function returnTodos(req, res) {
 
 export async function createTodo(req, res) {
   // What's the task
-  const { task } = req.body;
-
+  const { task, priority } = req.body;
   // Ensure there are no duplicates
   const results = await Todo.find({ task });
   console.log(results);
@@ -22,7 +21,7 @@ export async function createTodo(req, res) {
   const dbRes = await Todo.create({
     task,
     complete: false,
-    priority: false,
+    priority: priority ? true : false,
   });
   console.log('Adding it');
   console.log(dbRes);
