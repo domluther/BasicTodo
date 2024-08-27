@@ -3,37 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Todo app</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Todo Ticker - Stay Organized</title>
+    <!-- Link to your existing CSS file -->
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h1>Todo Ticker</h1>
-    <ul class="todoList">
-      <% for (let i = 0; i < todos.length; i++){ %>
-        <li class="todo <%=todos[i].complete %> <% if (todos[i].priority) {%> priority <%}%>" data-id= <%=todos[i]._id %>>
-            <span class="todoTask <%=todos[i].complete %>"><%=todos[i].task %> </span>
-                    <input type="checkbox" class="toggle" id=<%=todos[i]._id %> name="<%=todos[i].task %>"
-                    <% if (todos[i].complete) {%> checked
-                      <% } %> 
-                    >
-                    
-            </span>
-            <span class="priority" title="toggle priority"><% if (todos[i].priority) {%> ⭐️
-              <% } else {%> ✩
-                  <% } %> </span>
-          <span class="delete" title="delete item">🗑️</span>
-          </li>    
-      <% } %>
-    </ul>
+    <section class="container">
+      <h1>Welcome to Todo Ticker</h1>
+      <p>
+        Todo Ticker is your ultimate task management companion. Stay organized,
+        boost productivity, and never miss a beat with our intuitive and
+        feature-rich todo app.
+      </p>
 
-    <form action="/todo/" method="POST" >
-        <input name="task" type="text" placeholder="Add a todo">
-        <input name="priority" type="checkbox" class="star" placeholder="Priority?">
-        <input type="submit">
-    </form>
+      <ul class="features">
+        <li>Create and manage your todo list with ease</li>
+        <li>Set priorities for important tasks</li>
+        <li>Randomly pick a task when you're feeling indecisive</li>
+        <li>Edit task names on the fly</li>
+        <li>Remove completed tasks from your list</li>
+        <li>Track your progress and celebrate your achievements</li>
+      </ul>
 
-    <h2><%= count %> items remaining</h2>
-    <button class="pickRandom">Random task</button>
-      <script src="main.js" defer></script>
+      <p>
+        Ready to take control of your tasks? Sign up or log in to get started!
+      </p>
+
+      <div class="auth-form">
+        <input type="text" placeholder="Username" required />
+        <input type="password" placeholder="Password" required />
+        <section>
+          <button>Log In</button>
+          <button>Sign Up</button>
+        </section>
+      </div>
+    </section>
   </body>
 </html>

@@ -6,9 +6,6 @@ const router = express.Router();
 // POST / -> create a new todo
 router.post('/', TodoController.createTodo);
 
-// GET /todo/ -> return JSON of all the items
-router.get('/', TodoController.returnTodos);
-
 // GET /todo/random -> return a random todo item
 router.get('/random', TodoController.returnRandomTodo);
 

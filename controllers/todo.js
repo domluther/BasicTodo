@@ -1,12 +1,6 @@
 import { Types } from 'mongoose';
 import Todo from '../model/Todo.js';
 
-// Return all the todos as JSON - not sure why this exists but OK
-export async function returnTodos(req, res) {
-  const results = await Todo.find();
-  res.json({ results });
-}
-
 export async function createTodo(req, res) {
   // What's the task
   const { task, priority } = req.body;
