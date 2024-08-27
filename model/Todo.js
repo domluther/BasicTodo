@@ -20,6 +20,9 @@ const todoSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
+  userId: {
+    type: String,
+  },
 });
 
 const Todo = mongoose.model(collName, todoSchema);

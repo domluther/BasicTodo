@@ -29,14 +29,13 @@
         Ready to take control of your tasks? Sign up or log in to get started!
       </p>
 
-      <form action="/signup" method="post" class="authForm">
-        <input type="text" placeholder="Username" required />
-        <input type="password" placeholder="Password" required />
+      <form action="/auth/signup" method="post" class="authForm">
+        <input id="username" type="text" name="username" autocomplete="username" placeholder="Username" required autofocus />
+        <input id="password" type="password" name="password" autocomplete="password" placeholder="Password" required />
         <section>
           <button>Sign Up</button>
-          <button formaction="/login">Log In</button>
+          <button formaction="/auth/login" method="post">Log In</button>
         </section>
-      </>
     </form>
   </body>
 </html>
