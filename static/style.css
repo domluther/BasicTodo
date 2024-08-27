@@ -46,12 +46,12 @@ p {
   font-weight: bold;
 }
 
-.auth-form {
+.authForm {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.auth-form input {
+.authForm input {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
@@ -60,11 +60,11 @@ p {
   margin-bottom: 10px;
   transition: border-color 0.3s ease;
 }
-.auth-form input:focus {
+.authForm input:focus {
   border-color: #007bff;
   outline: none;
 }
-.auth-form button {
+.authForm button {
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
@@ -74,7 +74,7 @@ p {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.auth-form button:hover {
+.authForm button:hover {
   background-color: #0056b3;
 }
 
@@ -185,7 +185,7 @@ span.priority {
 }
 
 /* Form Styling */
-form {
+.todoForm {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -195,7 +195,7 @@ form {
 }
 
 /* Text Input Styling */
-form input[type='text'] {
+.todoForm input[type='text'] {
   flex-grow: 1;
   padding: 10px;
   font-size: 1rem;
@@ -205,13 +205,13 @@ form input[type='text'] {
   transition: border-color 0.3s ease;
 }
 
-form input[type='text']:focus {
+.todoForm input[type='text']:focus {
   border-color: #007bff;
   outline: none;
 }
 
 /* Submit Button Styling */
-form input[type='submit'] {
+.todoForm input[type='submit'] {
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
@@ -222,7 +222,7 @@ form input[type='submit'] {
   transition: background-color 0.3s ease;
 }
 
-form input[type='submit']:hover {
+.todoForm input[type='submit']:hover {
   background-color: #0056b3;
 }
 

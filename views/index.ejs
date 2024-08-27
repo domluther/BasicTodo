@@ -29,14 +29,14 @@
         Ready to take control of your tasks? Sign up or log in to get started!
       </p>
 
-      <div class="auth-form">
+      <form action="/signup" method="post" class="authForm">
         <input type="text" placeholder="Username" required />
         <input type="password" placeholder="Password" required />
         <section>
-          <button>Log In</button>
           <button>Sign Up</button>
+          <button formaction="/login">Log In</button>
         </section>
-      </div>
-    </section>
+      </>
+    </form>
   </body>
 </html>
