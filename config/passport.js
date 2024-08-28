@@ -6,7 +6,7 @@ import User from '../model/User.js';
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await User.findOne({ username: username });
+      const user = await User.findOne({ username });
 
       if (!user) {
         return done(null, false, { msg: `Username ${username} not found.` });
@@ -16,14 +16,14 @@ passport.use(
 
       if (isMatch) {
         return done(null, user);
-      } else {
+      } 
         return done(null, false, { msg: 'Invalid username or password.' });
-      }
+      
     } catch (err) {
       console.error('Error in LocalStrategy:', err);
       return done(err);
     }
-  })
+  }),
 );
 passport.serializeUser((user, done) => done(null, user.id));
 

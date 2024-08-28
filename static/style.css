@@ -39,7 +39,7 @@ p {
   position: relative;
 }
 .features li:before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   left: 0;
   color: #28a745;
@@ -195,7 +195,7 @@ span.priority {
 }
 
 /* Text Input Styling */
-.todoForm input[type='text'] {
+.todoForm input[type="text"] {
   flex-grow: 1;
   padding: 10px;
   font-size: 1rem;
@@ -205,13 +205,13 @@ span.priority {
   transition: border-color 0.3s ease;
 }
 
-.todoForm input[type='text']:focus {
+.todoForm input[type="text"]:focus {
   border-color: #007bff;
   outline: none;
 }
 
 /* Submit Button Styling */
-.todoForm input[type='submit'] {
+.todoForm input[type="submit"] {
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
@@ -222,7 +222,7 @@ span.priority {
   transition: background-color 0.3s ease;
 }
 
-.todoForm input[type='submit']:hover {
+.todoForm input[type="submit"]:hover {
   background-color: #0056b3;
 }
 
@@ -273,14 +273,14 @@ p.randomTask {
   cursor: pointer;
 }
 .star:before {
-  content: '\2606';
+  content: "\2606";
   position: relative;
   top: -0.7rem;
   left: -0.7rem;
   visibility: visible;
 }
 .star:checked:before {
-  content: '\2605';
+  content: "\2605";
   position: relative;
   top: -0.7rem;
   left: -0.7rem;

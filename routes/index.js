@@ -1,6 +1,7 @@
 import express from 'express';
-const router = express.Router();
 import * as rootController from '../controllers/root.js';
+
+const router = express.Router();
 
 // GET / -> return index.html
 router.get('/', rootController.getIndex);

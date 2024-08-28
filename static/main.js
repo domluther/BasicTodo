@@ -1,5 +1,3 @@
-'use strict';
-
 const listEle = document.querySelector('.todoList');
 const randomBtn = document.querySelector('.pickRandom');
 
@@ -8,7 +6,7 @@ listEle.addEventListener('click', handleListClick);
 randomBtn.addEventListener('click', pickRandomTask);
 
 function handleListClick(e) {
-  const taskId = e.target.closest('.todo').dataset['id'];
+  const taskId = e.target.closest('.todo').dataset.id;
   const taskName = e.target
     ?.closest('.todo')
     ?.querySelector('.todoTask')?.innerText;
@@ -43,7 +41,7 @@ function handleEditTask(target, taskId) {
   // Add the input box where the span was
   targetParent.insertAdjacentHTML(
     'afterbegin',
-    `<input class="editTodo" type="text" value="${currentTask}" /> <span class="fakeButton submitChange">✅</span><span class="fakeButton undoChange">❌</span>`
+    `<input class="editTodo" type="text" value="${currentTask}" /> <span class="fakeButton submitChange">✅</span><span class="fakeButton undoChange">❌</span>`,
   );
 }
 

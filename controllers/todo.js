@@ -9,7 +9,7 @@ export async function createTodo(req, res) {
   const doc = new Todo({
     task,
     complete: false,
-    priority: priority ? true : false,
+    priority: !!priority,
   });
 
   try {
@@ -30,9 +30,9 @@ export async function updateTodo(req, res) {
   try {
     const dbRes = await Todo.findOneAndUpdate(
       { _id: todoId },
-      { $set: { task: task } },
+      { $set: { task } },
       // Without this, doesn't run validator (check min length)
-      { runValidators: true }
+      { runValidators: true },
     );
     console.log(dbRes);
     console.log(`Updated text to ${task}`);
@@ -103,10 +103,10 @@ export async function deleteTodo(req, res) {
     console.log(dbRes);
     if (dbRes.deletedCount === 1) {
       return res.json({ msg: `delete todo ${todoId}` });
-    } else {
+    } 
       throw new Error(`No document deleted for ID ${todoId}`);
-    }
+    
   } catch (error) {
-    res.json({ error: error });
+    res.json({ error });
   }
 }

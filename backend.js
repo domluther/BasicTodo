@@ -9,13 +9,13 @@ import flash from 'connect-flash';
 
 // my code
 import connectToDB from './config/db.js';
-// Will be used for ensureAuth?
+// Not called but simply importing it means that it is run
 import * as passportConfig from './config/passport.js';
 
 //  My routes
 import rootRoutes from './routes/index.js';
 import todoRoutes from './routes/todo.js';
-import authRoutes from './routes//auth.js';
+import authRoutes from './routes/auth.js';
 
 // Constants
 const app = express();
@@ -39,7 +39,7 @@ app.use(
     saveUninitialized: true,
     // New way of doing MongoStore
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-  })
+  }),
 );
 // Passport middleware
 app.use(passport.initialize());
