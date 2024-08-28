@@ -82,7 +82,6 @@ async function pickRandomTask() {
   const dbRes = await fetch('/todo/random');
   const data = await dbRes.json();
   const { _id } = data.result;
-
   // Clean up any previous randomly selected highlighting
   document
     .querySelectorAll('li.todo')

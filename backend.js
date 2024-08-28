@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import flash from 'connect-flash';
 
 // my code
 import connectToDB from './config/db.js';
@@ -44,8 +43,6 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-// Used to show messages
-app.use(flash());
 
 // The routes
 app.use('/', rootRoutes);

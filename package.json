@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch --env-file=.env backend.js",
+    "todo:dev": "node --watch --env-file=.env backend.js",
     "lint:eslint": "eslint --fix .",
     "lint:prettier": "prettier --write .",
     "lint": "npm run lint:eslint && lint:prettier"
@@ -25,7 +24,8 @@
     "mongoose": "^8.5.3",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

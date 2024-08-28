@@ -12,16 +12,15 @@ passport.use(
         return done(null, false, { msg: `Username ${username} not found.` });
       }
 
-      const isMatch = await user.comparePassword(password);
+      const passwordMatch = await user.comparePassword(password);
 
-      if (isMatch) {
+      if (passwordMatch) {
         return done(null, user);
-      } 
-        return done(null, false, { msg: 'Invalid username or password.' });
-      
-    } catch (err) {
-      console.error('Error in LocalStrategy:', err);
-      return done(err);
+      }
+      return done(null, false, { msg: 'Invalid username or password.' });
+    } catch (strategyError) {
+      console.error('Error in LocalStrategy:', strategyError);
+      return done(strategyError);
     }
   }),
 );

@@ -3,6 +3,8 @@ import * as TodoController from '../controllers/todo.js';
 
 const router = express.Router();
 
+router.get('/', TodoController.getTodo);
+
 // POST / -> create a new todo
 router.post('/', TodoController.createTodo);
 
