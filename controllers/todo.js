@@ -36,10 +36,10 @@ export async function createTodo(req, res) {
     userId: _id,
     task,
     complete: false,
-    priority: priority,
+    priority,
   });
   try {
-    const dbRes = await doc.save();
+    await doc.save();
     console.log(`Task added: ${task}`);
     res.redirect('/todo');
   } catch (error) {
@@ -80,7 +80,7 @@ export async function returnRandomTodo(req, res) {
   // Randomly roll but if it's not a  priority task then try again
   let randomIndex = Math.floor(Math.random() * results.length);
   let result = results[randomIndex];
-  if (result.priority) {
+  if (result?.priority) {
     return res.json({ result });
   }
   //  If the first pick isn't priority, again.

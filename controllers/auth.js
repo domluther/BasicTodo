@@ -45,7 +45,7 @@ export async function signup(req, res, next) {
     await user.save();
 
     // Simplified - use the same login function from above instead of writing my own
-    login(req, res, next);
+    return login(req, res, next);
   } catch (signupError) {
     return next(signupError);
   }
