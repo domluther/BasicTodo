@@ -34,6 +34,11 @@
 
     <h2><%= count %> items remaining</h2>
     <button class="pickRandom">Random task</button>
-      <script src="../main.js" defer></script>
+    <form action="/auth/logout" method="POST">
+        <button type="submit" class="logoutBtn">Logout</button>
+    </form>
+
+
+    <script src="../main.js" defer></script>
   </body>
 </html>
