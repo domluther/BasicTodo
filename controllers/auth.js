@@ -1,55 +1,32 @@
 import passport from 'passport';
 import User from '../model/User.js';
 
+// Simplified login function - instead of the callback option
 export function login(req, res, next) {
-  passport.authenticate('local', (authError, user, info) => {
-    if (authError) {
-      return next(authError);
-    }
-    if (!user) {
-      return res.redirect('/');
-    }
-    console.log('About to login');
-    req.logIn(user, (loginError) => {
-      if (loginError) {
-        return next(loginError);
-      }
-      return res.redirect(req.session.returnTo || '/todo');
-    });
-    return null; // To stop eslint
+  passport.authenticate('local', {
+    successFlash: 'You have logged in',
+    successMessage: 'You have logged in',
+    successRedirect: '/todo',
+    failureFlash: 'Login failed',
+    failureMessage: 'Login failed',
+    failureRedirect: '/',
   })(req, res, next);
 }
 
-export function logout(req, res) {
-  console.log('Session before logout:', req.session);
-  req.logout(() => {
-    console.log('User has logged out.');
-    req.session.destroy((err) => {
-      if (err)
-        console.log(
-          'Error : Failed to destroy the session during logout.',
-          err,
-        );
-      req.user = null;
-      res.redirect('/');
-    });
+export function logout(req, res, next) {
+  req.logout((err) => {
+    console.log('Logging user out');
+    // Remove the cookie from the browser
+    res.clearCookie('connect.sid');
+    if (err) {
+      console.error('Error : Failed to logout');
+      return next(err);
+    }
+    return res.redirect('/');
   });
 }
 
 export async function signup(req, res, next) {
-  // const validationErrors = [];
-  // if (!validator.isEmail(req.body.email))
-  //   validationErrors.push({ msg: 'Please enter a valid email address.' });
-  // if (!validator.isLength(req.body.password, { min: 8 }))
-  //   validationErrors.push({
-  //     msg: 'Password must be at least 8 characters long',
-  //   });
-  // if (req.body.password !== req.body.confirmPassword)
-  //   validationErrors.push({ msg: 'Passwords do not match' });
-  // if (validationErrors.length) {
-  //   return res.redirect('../signup');
-  // }
-
   try {
     const { username } = req.body;
     console.log(`Trying to sign up ${username}`);
@@ -67,13 +44,8 @@ export async function signup(req, res, next) {
 
     await user.save();
 
-    req.logIn(user, (loginError) => {
-      if (loginError) {
-        return next(loginError);
-      }
-      return res.redirect('/todo');
-    });
-    return null;
+    // Simplified - use the same login function from above instead of writing my own
+    login(req, res, next);
   } catch (signupError) {
     return next(signupError);
   }

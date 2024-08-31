@@ -4,6 +4,7 @@ import Todo from '../model/Todo.js';
 // Getting the todo page
 export async function getTodo(req, res) {
   try {
+    console.log(req.session);
     // Needed to work out who the user is & render the page with their name
     const { username, _id } = req.user;
     // .collation({locale: "en"}) means the sorting is case insensitive

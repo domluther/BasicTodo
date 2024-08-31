@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-
+import flash from 'connect-flash';
 // my code
 import connectToDB from './config/db.js';
 // Not called but simply importing it means that it is run
@@ -28,6 +28,7 @@ app.use(express.static('static'));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(flash());
 
 // Session must come before Passport middleware
 app.use(
@@ -56,6 +57,18 @@ const unknownEndpoint = (req, res) => {
 
 // After the valid routes
 app.use(unknownEndpoint);
+
+const errorHandler = (error, req, res, next) => {
+  console.log('error handling middleware!');
+  console.error(error.message);
+  if (error.name === 'CastError') {
+    return res.status(400).send({ error: 'malformed id' });
+  }
+  console.log(`New error type - ${error.name}`);
+
+  return next(error);
+};
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);

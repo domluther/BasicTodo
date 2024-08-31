@@ -17,6 +17,7 @@ passport.use(
       if (passwordMatch) {
         return done(null, user);
       }
+
       return done(null, false, { msg: 'Invalid username or password.' });
     } catch (strategyError) {
       console.error('Error in LocalStrategy:', strategyError);
