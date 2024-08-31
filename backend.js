@@ -8,8 +8,8 @@ import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 // my code
 import connectToDB from './config/db.js';
-// Not called but simply importing it means that it is run
-import * as passportConfig from './config/passport.js';
+// Importing purely for side effects so just import like this
+import './config/passport.js';
 
 //  My routes
 import rootRoutes from './routes/index.js';
